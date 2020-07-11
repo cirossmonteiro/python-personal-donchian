@@ -16,11 +16,18 @@ from functs import Functions
 db = DBHelper()
 dbname = 'stocksDan.sqlite'
 fc = Functions()
+#ciro: percebi que você usa muito termo em inglês com palavra em português
+#sugestão: usar apenas inglês, exceto termo mais técnico que se fosse traduzir poderia induzir ao erro
+#exemplo: carteira deve poder sempre ser portfolio, ativo é asset, etc.
 ADD_ATIVO_B, REM_ATIVO_B, PORTFOLIO_B, PORTFOLIO_C, HORA_B = range(5)
 LIST_OF_ADMINS = [545699841]
 BLACK_LIST = {
     395945106: 'Louis'
 }
+
+#ciro: falta ordem nas linhas, você mistura comandos, declarações de variáveis e 'defs'
+#sugestão: recorrer ao uso de classe, até pra quebrar em mais de um arquivo
+#código em python com 400 linhas é grande demais
 
 def restricted(func):
     @wraps(func)
@@ -406,7 +413,11 @@ unkn_handler = tg.MessageHandler(tg.Filters.command, unknown)
 def send_all_msg(update: Update, context: tg.CallbackContext):
     global wrapped_msg
     i = 0
+    #ciro: se 'i' e 'wrapped_msg' não forem alterados em nenhuma iteração, é melhor usar for i in range (len(wrapped_msg)+1)
     while i <= len(wrapped_msg):
+        #ciro: dict com key do tipo int? faz sentido nesse contexto?
+        #sugestão: revisar o uso de dict aqui, tenta mudar pra list ou setar keys do tipo string
+        #onde tiver: wrapped_msg[len(wrapped_msg)+1] talvez usar append
         if i in wrapped_msg:
             send_msg(wrapped_msg[i][0], wrapped_msg[i][1], wrapped_msg[i][2], wrapped_msg[i][3])
         i += 1

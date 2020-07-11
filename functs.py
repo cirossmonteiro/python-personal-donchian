@@ -26,6 +26,7 @@ class Functions():
     def func_com(self):
         i = 0
         comm = []
+        #ciro: acho que se você colocar cada uma dessas linhas como um elemento de array, você atinge o mesmo objetivo sem ficar incrementando uma variável
         comm.insert(i, ('/donchian - Faz o bot analisar os gráficos e te mandar a mensagem automática na hora. Espere até 5 minutos para receber.'))
         i += 1
         comm.insert(i, ('/help - Explicações sobre para que serve o bot, como funciona e por quem foi desenvolvido.\r\n'))
@@ -44,11 +45,14 @@ class Functions():
         i += 1
         comm.insert(i, ('/hora - Modifica a hora a qual o bot irá enviar a mensagem automática. Exemplo: "18:45".'))
         reply = ''
+        #ciro: acho que rola um join aqui, pra concatenar um número indefinido de strings
         for j in comm:
             reply = reply+j
         return reply
 
     def func_add_ativo(self, context, chat_id, dbname):
+        #ciro: existe uma forma de você escrever um regex pra detectar [a-zA-Z] 4 vezes
+        #só pesquisar alguma cheat sheet, que isso é bem 'básico' (regex é naturalmente difícil)
         y = re.match('^[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z](\d|\d\d)$', context)
         if y: 
             db.add_stock(context.upper(), chat_id, dbname)
@@ -135,6 +139,7 @@ class Functions():
         result_Carteira = dc.donch_Carteira(user, dbname)
         day_now = str(datetime.now().date())
         
+        #ciro: isso de ficar comparando com int e com list parece ruim, deve ter uma forma melhor de controlar os valores da variável
         if result_Compra == 1:
             reply_Compra = 'Algo deu errado ao importar a lista de Small Caps.'
         elif result_Compra == []:

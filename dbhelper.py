@@ -15,6 +15,11 @@ idxid   +++++ liststock   +++++ dia
 
 import sqlite3
 
+#ciro: como comentei no wpp, django rest vai ser uma opção interessante pra você
+#eu vi que você criou index: você não lida apenas com dados diários? o ganho pra pouco volume é pequeno
+#quando escrever query, usar string format mesmo (o template string, não sei o melhor termo pra isso)
+#concatenar string pode dar erro se o tipo da variável mudar - você não pode concatenar '123' com 456 (string com int)
+
 class DBHelper:
     def connect(self, owner, dbname):
         self.dbname = dbname
@@ -81,6 +86,8 @@ class DBHelper:
         owner = self.connect(owner, dbname)
         stmt = 'SELECT * FROM users'
         try:
+            #ciro: salvar o resultado da query antes de acessar os dados
+            #pra evitar executar a query pra cada iteração
             s = [x for x in self.conn.execute(stmt)]
             return s
         except:
